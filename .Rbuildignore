@@ -9,3 +9,8 @@ LICENSE.md
 pkgdown/
 docs/
 revdep/
+^LICENSE\.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
