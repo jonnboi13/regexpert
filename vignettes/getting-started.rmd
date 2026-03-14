@@ -98,4 +98,3 @@ Use `negate = TRUE` to find everything *except* whitespace:
   xp_find()
 #> [1] "hello" "world"
 ```
-````

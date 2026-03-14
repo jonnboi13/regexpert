@@ -1,3 +1,32 @@
-url: https://Jonnboi13.github.io/regexpert/
+url: https://jonnboi13.github.io/regexpert/
+
 template:
   bootstrap: 5
+
+navbar:
+  structure:
+    left: [intro, reference, articles]
+    right: [github]
+
+home:
+  title: regexpert
+  description: A human-readable DSL for building and executing regular expressions in R.
+
+reference:
+  - title: "Builders"
+    desc: "Functions for describing patterns in plain English."
+    contents:
+      - xp_build_digits
+      - xp_build_letters
+      - xp_build_whitespace
+  - title: "Actions"
+    desc: "Functions for executing patterns on text."
+    contents:
+      - xp_find
+      - xp_view
+
+articles:
+  - title: "Get Started"
+    navbar: ~
+    contents:
+      - getting-started
