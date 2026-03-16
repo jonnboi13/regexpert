@@ -1,8 +1,8 @@
 # regexpert <img src="man/figures/logo.svg" align="right" height="139" />
 
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
+<!-- [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![R-CMD-check](https://github.com/Jonnboi13/regexpert/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Jonnboi13/regexpert/actions)
-[![Documentation](https://img.shields.io/badge/docs-pkgdown-blue.svg)](https://Jonnboi13.github.io/regexpert/)
+[![Documentation](https://img.shields.io/badge/docs-pkgdown-blue.svg)](https://Jonnboi13.github.io/regexpert/) -->
 
 The goal of **regexpert** is to make regular expressions in R less of a headache. It provides a pipe-friendly, human-readable DSL for building and executing regex patterns — no symbol memorization required.
 
