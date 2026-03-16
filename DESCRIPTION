@@ -7,7 +7,7 @@ Description: Simplifies the creation and management of regular expressions
     through a human-readable domain-specific language. 'regexpert' provides 
     intuitive tools for building patterns, explaining complex regex logic, 
     and integrating seamlessly with tidyverse workflows.
-URL: https://jonnboi13.github.io/regexpert
+URL: https://Jonnboi13.github.io/regexpert/
 BugReports: https://github.com/Jonnboi13/regexpert/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
