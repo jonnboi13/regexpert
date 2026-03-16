@@ -26,75 +26,75 @@ That `"\\d+"` is a regular expression. It works — but what does it *mean*? For
 
 This is the problem `regexpert` solves.
 
-## The Build → Act Workflow
+## The Build → Operate → Act Workflow
 
-`regexpert` breaks pattern matching into two plain-English steps:
+`regexpert` breaks pattern matching into a plain-English pipeline:
 
-1. **Build** your pattern using a descriptive `xp_build_*` function.
-2. **Act** on it using `xp_find()` to return matches.
+1. **Build** your pattern using descriptive `xp_build_*` functions.
+2. **Operate** on the pattern to specify repetitions or boundaries.
+3. **Act** on it using `xp_action_find()` to return matches.
 
-These steps are connected with the pipe (`%>%` or `|>`), so your code reads like a sentence:
+These steps are connected with the pipe (`%>%` or `|>`), making your code read like a sentence:
 ```{r eval = FALSE}
-"Call us at 800-555-1234" %>%
-  xp_build_digits() %>%
-  xp_find()
+xp_build_digits() %>%
+  xp_op_repeat(1, Inf) %>%
+  xp_action_find("Call us at 800-555-1234")
 #> [1] "800" "555" "1234"
 ```
 
-No regex required. You described what you wanted in plain English, and `regexpert` handled the rest.
+No regex required. You described what you wanted, and `regexpert` handled the escaping and logic.
 
 ## The Builders
 
 ### `xp_build_digits()`
 
-Matches any numeric character (0–9).
+Matches numeric characters (0–9). In `regexpert`, builders match a single character by default. To match groups of digits, follow them with `xp_op_repeat()`.
 ```{r eval = FALSE}
-"Order #88412 placed on 2024-01-15" %>%
-  xp_build_digits() %>%
-  xp_find()
+xp_build_digits() %>%
+  xp_op_repeat(1, Inf) %>%
+  xp_action_find("Order #88412 placed on 2024-01-15")
 #> [1] "88412" "2024" "01" "15"
-```
-
-Use `negate = TRUE` to find everything *except* digits:
-```{r eval = FALSE}
-"Price: $100!" %>%
-  xp_build_digits(negate = TRUE) %>%
-  xp_find()
-#> [1] "Price: $" "!"
 ```
 
 ### `xp_build_letters()`
 
-Matches any alphabetic character (a–z, A–Z).
+Matches alphabetic characters (a–z, A–Z). You can specify the case if needed.
 ```{r eval = FALSE}
-"Order #88412 placed" %>%
-  xp_build_letters() %>%
-  xp_find()
+xp_build_letters(case = "both") %>%
+  xp_op_repeat(1, Inf) %>%
+  xp_action_find("Order #88412 placed")
 #> [1] "Order" "placed"
-```
-
-Use `negate = TRUE` to find everything *except* letters:
-```{r eval = FALSE}
-"abc123" %>%
-  xp_build_letters(negate = TRUE) %>%
-  xp_find()
-#> [1] "123"
 ```
 
 ### `xp_build_whitespace()`
 
 Matches spaces, tabs, and newlines.
 ```{r eval = FALSE}
-"hello   world" %>%
-  xp_build_whitespace() %>%
-  xp_find()
-#> [1] " " " " " "
+xp_build_whitespace() %>%
+  xp_op_repeat(1, Inf) %>%
+  xp_action_find("hello   world")
+#> [1] "   "
 ```
 
-Use `negate = TRUE` to find everything *except* whitespace:
+### `xp_build_literal()`
+
+Sometimes you need to match specific symbols like `$` or `.`. Usually, these are "dangerous" in regex, but `xp_build_literal()` automatically escapes them for you.
 ```{r eval = FALSE}
-"hello   world" %>%
-  xp_build_whitespace(negate = TRUE) %>%
-  xp_find()
-#> [1] "hello" "world"
+xp_build_literal("$") %>%
+  xp_build_digits() %>%
+  xp_op_repeat(1, Inf) %>%
+  xp_action_find("The price is $100")
+#> [1] "$100"
+```
+
+## Inspecting Your Work
+
+If you ever want to see the actual regex string being generated under the hood, use `xp_action_view()`.
+```{r eval = FALSE}
+xp_build_digits() %>%
+  xp_op_repeat(3) %>%
+  xp_build_literal("-") %>%
+  xp_action_view()
+#> Current Regex Pattern:
+#> (?:\d){3}\-
 ```

@@ -4,20 +4,18 @@
 \alias{xp_build_whitespace}
 \title{Build a whitespace pattern}
 \usage{
-xp_build_whitespace(pattern = NULL, n = NULL)
+xp_build_whitespace(pattern = NULL)
 }
 \arguments{
-\item{pattern}{(Optional) An existing pattern from the pipe.}
-
-\item{n}{Exact number of spaces/tabs.}
+\item{pattern}{(Optional) An existing pattern from a pipe.}
 }
 \value{
-A character string.
+A \code{regexpert} object.
 }
 \description{
-Build a whitespace pattern
+Matches spaces, tabs, and line breaks.
 }
 \examples{
-xp_literal("Word") \%>\% xp_build_whitespace() \%>\% xp_literal("Word")
-xp_build_whitespace(n = 2)
+# Match two words separated by whitespace
+xp_build_letters() \%>\% xp_build_whitespace() \%>\% xp_build_letters()
 }

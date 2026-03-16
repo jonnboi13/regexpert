@@ -4,20 +4,18 @@
 \alias{xp_build_alnum}
 \title{Build an alphanumeric pattern}
 \usage{
-xp_build_alnum(pattern = NULL, n = NULL)
+xp_build_alnum(pattern = NULL)
 }
 \arguments{
-\item{pattern}{(Optional) An existing pattern from the pipe.}
-
-\item{n}{Exact number of characters.}
+\item{pattern}{(Optional) An existing pattern from a pipe.}
 }
 \value{
-A character string.
+A \code{regexpert} object.
 }
 \description{
-Build an alphanumeric pattern
+Matches any single letter (A-Z, a-z) or digit (0-9).
 }
 \examples{
-xp_build_alnum(n = 5)
-xp_literal("#") \%>\% xp_build_alnum(n = 3)
+# Match a string of 8 alphanumeric characters (like a serial number)
+xp_build_alnum() \%>\% xp_op_repeat(8)
 }

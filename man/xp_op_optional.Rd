@@ -7,14 +7,25 @@
 xp_op_optional(pattern)
 }
 \arguments{
-\item{pattern}{A character string.}
+\item{pattern}{A \code{regexpert} object or character string from the pipe.}
 }
 \value{
-A character string.
+A \code{regexpert} object.
 }
 \description{
-Tells the engine that the preceding pattern may appear 0 or 1 times.
+Specifies that the preceding pattern should occur zero or one time.
+Equivalent to the \code{?} quantifier.
 }
 \examples{
-xp_build_digits(3) \%>\% xp_op_optional()
+# Match "color" or "colour"
+xp_build_literal("colo") \%>\% 
+  xp_build_literal("u") \%>\% 
+  xp_op_optional() \%>\% 
+  xp_build_literal("r")
+
+# Optional area code
+xp_build_literal("(") \%>\% xp_build_digits() \%>\% xp_op_repeat(3) \%>\% 
+  xp_build_literal(") ") \%>\% 
+  xp_op_optional() \%>\% 
+  xp_build_digits() \%>\% xp_op_repeat(7)
 }

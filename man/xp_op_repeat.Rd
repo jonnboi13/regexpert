@@ -7,27 +7,38 @@
 xp_op_repeat(pattern, n, max = NULL)
 }
 \arguments{
-\item{pattern}{A character string.}
+\item{pattern}{A \code{regexpert} object or character string from the pipe.}
 
-\item{n}{Minimum number of repetitions.}
+\item{n}{Integer. The minimum number of repetitions.}
 
-\item{max}{Maximum number of repetitions. Use Inf for "or more".
-If NULL (default), matches exactly n times.}
+\item{max}{Integer or Inf. The maximum number of repetitions.
+If \code{NULL} (default), the pattern must match exactly \code{n} times.}
 }
 \value{
-A character string wrapped in a non-capturing group.
+A \code{regexpert} object.
 }
 \description{
-Specifies how many times a pattern should occur. Can handle exact counts,
-ranges, or unbounded "many" matches.
+Specifies how many times a pattern should occur. This function acts as a
+quantifier, allowing for exact counts, ranges, or unbounded "many" matches.
+}
+\details{
+The function automatically optimizes common regex quantifiers:
+\itemize{
+\item 0 to Inf becomes \code{*}
+\item 1 to Inf becomes \code{+}
+\item Exact counts use \code{{n}}
+}
+It also wraps the incoming pattern in a non-capturing group \code{(?:)}
+to ensure the quantifier applies to the entire preceding logic rather than
+just the last character.
 }
 \examples{
-# Exactly 3 digits
+# Match exactly 3 digits
 xp_build_digits() \%>\% xp_op_repeat(3)
 
-# Between 2 and 5 letters
-xp_build_letters() \%>\% xp_op_repeat(2, 5)
+# Match between 2 and 5 lowercase letters
+xp_build_letters(case = "lower") \%>\% xp_op_repeat(2, 5)
 
-# 1 or more (The "Plus" logic)
+# Match 1 or more alphanumeric characters
 xp_build_alnum() \%>\% xp_op_repeat(1, Inf)
 }

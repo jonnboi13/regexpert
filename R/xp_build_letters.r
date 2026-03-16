@@ -1,20 +1,24 @@
 #' Build a letter pattern
 #'
-#' @param pattern (Optional) An existing pattern from the pipe.
-#' @param case "both" (default), "lower", or "upper".
-#' @param n Exact number of repetitions.
-#' @return A character string.
+#' Matches alphabetical characters.
+#'
+#' @param pattern (Optional) An existing pattern from a pipe.
+#' @param case Character. One of "both" (default), "lower", or "upper".
+#' @return A \code{regexpert} object.
 #' @export
 #' @examples
-#' xp_build_letters(case = "upper", n = 3)
-#' xp_build_digits(1) %>% xp_build_letters(case = "lower", n = 2)
-xp_build_letters <- function(pattern = NULL, case = "both", n = NULL) {
-  class <- switch(case,
-    "lower" = "[[:lower:]]",
-    "upper" = "[[:upper:]]",
-    "[[:alpha:]]"
+#' # Match lowercase letters
+#' xp_build_letters(case = "lower")
+#' 
+#' # Build a username pattern (Letters followed by numbers)
+#' xp_build_letters() %>% xp_op_repeat(1, Inf) %>% xp_build_digits()
+xp_build_letters <- function(pattern = NULL, case = c("both", "lower", "upper")) {
+  case <- match.arg(case)
+  new_piece <- switch(case,
+    both  = "[A-Za-z]",
+    lower = "[a-z]",
+    upper = "[A-Z]"
   )
-  new_piece <- if (is.null(n)) class else paste0(class, "{", n, "}")
-  if (is.null(pattern)) return(new_piece)
-  paste0(pattern, new_piece)
+  res <- if (is.null(pattern)) new_piece else paste0(as.character(pattern), new_piece)
+  new_xp(res)
 }

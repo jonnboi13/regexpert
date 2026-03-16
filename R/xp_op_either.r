@@ -1,13 +1,21 @@
-#' Match one of two patterns
+#' Add an alternative pattern (OR)
 #'
-#' Provides an 'OR' logic between two different patterns.
+#' Adds an "either/or" condition to the pattern. This is equivalent to the 
+#' regex pipe \code{|} operator.
 #'
-#' @param pattern_a The first pattern.
-#' @param pattern_b The second pattern.
-#' @return A character string.
+#' @param pattern A \code{regexpert} object or character string from the pipe.
+#' @param alternative The alternative pattern or string to match.
+#' @return A \code{regexpert} object.
 #' @export
 #' @examples
-#' xp_op_either(xp_build_digits(3), xp_build_letters(2))
-xp_op_either <- function(pattern_a, pattern_b) {
-  paste0("(?:", pattern_a, "|", pattern_b, ")")
+#' # Match "cat" or "dog"
+#' xp_build_literal("cat") %>% xp_op_either("dog")
+#' 
+#' # Match a digit or a letter
+#' xp_build_digits() %>% xp_op_either(xp_build_letters())
+xp_op_either <- function(pattern, alternative) {
+  # Wrap both in a non-capturing group to prevent logic leakage
+  # e.g., ^a|b$ should usually be ^(?:a|b)$
+  res <- paste0("(?:", as.character(pattern), "|", as.character(alternative), ")")
+  new_xp(res)
 }

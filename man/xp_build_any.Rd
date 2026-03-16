@@ -2,22 +2,20 @@
 % Please edit documentation in R/xp_build_any.r
 \name{xp_build_any}
 \alias{xp_build_any}
-\title{Build a wildcard pattern}
+\title{Build an "any character" pattern}
 \usage{
-xp_build_any(pattern = NULL, n = NULL)
+xp_build_any(pattern = NULL)
 }
 \arguments{
-\item{pattern}{(Optional) An existing pattern from the pipe.}
-
-\item{n}{Exact number of characters.}
+\item{pattern}{(Optional) An existing pattern from a pipe.}
 }
 \value{
-A character string.
+A \code{regexpert} object.
 }
 \description{
-Build a wildcard pattern
+Matches any single character except for a newline (the regex dot).
 }
 \examples{
-xp_literal("A") \%>\% xp_build_any() \%>\% xp_literal("C")
-xp_build_any(n = 10)
+# Match anything between two brackets
+xp_build_literal("[") \%>\% xp_build_any() \%>\% xp_op_repeat(0, Inf) \%>\% xp_build_literal("]")
 }

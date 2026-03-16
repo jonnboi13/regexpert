@@ -1,14 +1,15 @@
-#' Build a wildcard pattern
+#' Build an "any character" pattern
 #'
-#' @param pattern (Optional) An existing pattern from the pipe.
-#' @param n Exact number of characters.
-#' @return A character string.
+#' Matches any single character except for a newline (the regex dot).
+#'
+#' @param pattern (Optional) An existing pattern from a pipe.
+#' @return A \code{regexpert} object.
 #' @export
 #' @examples
-#' xp_literal("A") %>% xp_build_any() %>% xp_literal("C")
-#' xp_build_any(n = 10)
-xp_build_any <- function(pattern = NULL, n = NULL) {
-  new_piece <- if (is.null(n)) "." else paste0(".{", n, "}")
-  if (is.null(pattern)) return(new_piece)
-  paste0(pattern, new_piece)
+#' # Match anything between two brackets
+#' xp_build_literal("[") %>% xp_build_any() %>% xp_op_repeat(0, Inf) %>% xp_build_literal("]")
+xp_build_any <- function(pattern = NULL) {
+  new_piece <- "."
+  res <- if (is.null(pattern)) new_piece else paste0(as.character(pattern), new_piece)
+  new_xp(res)
 }

@@ -1,12 +1,15 @@
-#' Anchor pattern to the start
+#' Anchor to the start of the string
 #'
-#' Forces the pattern to match only if it appears at the beginning of the string.
+#' Adds the \code{^} anchor to the beginning of the pattern, ensuring 
+#' the match must start at the very first character of the string.
 #'
-#' @param pattern A character string.
-#' @return A character string with a '^' prefix.
+#' @param pattern A \code{regexpert} object or character string from the pipe.
+#' @return A \code{regexpert} object.
 #' @export
 #' @examples
-#' xp_build_digits(3) %>% xp_wrap_start()
+#' # Match "Hello" only if it's at the very start
+#' xp_build_literal("Hello") %>% xp_wrap_start()
 xp_wrap_start <- function(pattern) {
-  paste0("^", pattern)
+  res <- paste0("^", as.character(pattern))
+  new_xp(res)
 }

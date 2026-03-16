@@ -4,20 +4,21 @@
 \alias{xp_build_digits}
 \title{Build a digit pattern}
 \usage{
-xp_build_digits(pattern = NULL, n = NULL)
+xp_build_digits(pattern = NULL)
 }
 \arguments{
-\item{pattern}{(Optional) An existing pattern from the pipe.}
-
-\item{n}{Exact number of digits.}
+\item{pattern}{(Optional) An existing pattern from a pipe.}
 }
 \value{
-A character string.
+A \code{regexpert} object.
 }
 \description{
-Build a digit pattern
+Matches any single digit (0-9).
 }
 \examples{
-xp_build_digits(n = 3)
-xp_literal("Area Code: ") \%>\% xp_build_digits(3)
+# Match exactly three digits
+xp_build_digits() \%>\% xp_op_repeat(3)
+
+# Combine digits with literal text
+xp_build_literal("Year: ") \%>\% xp_build_digits() \%>\% xp_op_repeat(4)
 }

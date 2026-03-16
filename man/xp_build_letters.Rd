@@ -4,22 +4,23 @@
 \alias{xp_build_letters}
 \title{Build a letter pattern}
 \usage{
-xp_build_letters(pattern = NULL, case = "both", n = NULL)
+xp_build_letters(pattern = NULL, case = c("both", "lower", "upper"))
 }
 \arguments{
-\item{pattern}{(Optional) An existing pattern from the pipe.}
+\item{pattern}{(Optional) An existing pattern from a pipe.}
 
-\item{case}{"both" (default), "lower", or "upper".}
-
-\item{n}{Exact number of repetitions.}
+\item{case}{Character. One of "both" (default), "lower", or "upper".}
 }
 \value{
-A character string.
+A \code{regexpert} object.
 }
 \description{
-Build a letter pattern
+Matches alphabetical characters.
 }
 \examples{
-xp_build_letters(case = "upper", n = 3)
-xp_build_digits(1) \%>\% xp_build_letters(case = "lower", n = 2)
+# Match lowercase letters
+xp_build_letters(case = "lower")
+
+# Build a username pattern (Letters followed by numbers)
+xp_build_letters() \%>\% xp_op_repeat(1, Inf) \%>\% xp_build_digits()
 }

@@ -2,19 +2,21 @@
 % Please edit documentation in R/xp_wrap_start.r
 \name{xp_wrap_start}
 \alias{xp_wrap_start}
-\title{Anchor pattern to the start}
+\title{Anchor to the start of the string}
 \usage{
 xp_wrap_start(pattern)
 }
 \arguments{
-\item{pattern}{A character string.}
+\item{pattern}{A \code{regexpert} object or character string from the pipe.}
 }
 \value{
-A character string with a '^' prefix.
+A \code{regexpert} object.
 }
 \description{
-Forces the pattern to match only if it appears at the beginning of the string.
+Adds the \code{^} anchor to the beginning of the pattern, ensuring
+the match must start at the very first character of the string.
 }
 \examples{
-xp_build_digits(3) \%>\% xp_wrap_start()
+# Match "Hello" only if it's at the very start
+xp_build_literal("Hello") \%>\% xp_wrap_start()
 }

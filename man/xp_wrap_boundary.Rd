@@ -2,21 +2,21 @@
 % Please edit documentation in R/xp_wrap_boundary.r
 \name{xp_wrap_boundary}
 \alias{xp_wrap_boundary}
-\title{Wrap pattern in word boundaries}
+\title{Wrap in word boundaries}
 \usage{
 xp_wrap_boundary(pattern)
 }
 \arguments{
-\item{pattern}{A character string.}
+\item{pattern}{A \code{regexpert} object or character string from the pipe.}
 }
 \value{
-A character string wrapped in '\\b'.
+A \code{regexpert} object.
 }
 \description{
-Ensures the pattern matches as a whole word, preventing matches
-inside other strings (e.g., matching 'cat' in 'category').
+Adds \code{\\b} to both sides of the pattern. This ensures that the
+pattern is matched as a whole word (not inside another word).
 }
 \examples{
-# Matches '123' but not '01234'
-xp_build_digits(3) \%>\% xp_wrap_boundary()
+# Match "cat" but not "category" or "bobcat"
+xp_build_literal("cat") \%>\% xp_wrap_boundary()
 }

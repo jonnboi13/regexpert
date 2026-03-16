@@ -2,19 +2,24 @@
 % Please edit documentation in R/xp_wrap_end.r
 \name{xp_wrap_end}
 \alias{xp_wrap_end}
-\title{Anchor pattern to the end}
+\title{Anchor to the end of the string}
 \usage{
 xp_wrap_end(pattern)
 }
 \arguments{
-\item{pattern}{A character string.}
+\item{pattern}{A \code{regexpert} object or character string from the pipe.}
 }
 \value{
-A character string with a '$' suffix.
+A \code{regexpert} object.
 }
 \description{
-Forces the pattern to match only if it appears at the end of the string.
+Adds the \code{$} anchor to the end of the pattern, ensuring
+the match must continue until the very last character of the string.
 }
 \examples{
-xp_build_letters() \%>\% xp_wrap_end()
+# Match ".com" only if it's at the very end
+xp_build_literal(".com") \%>\% xp_wrap_end()
+
+# Match an exact 5-digit string (start to end)
+xp_build_digits() \%>\% xp_op_repeat(5) \%>\% xp_wrap_start() \%>\% xp_wrap_end()
 }

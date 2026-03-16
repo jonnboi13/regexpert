@@ -2,21 +2,26 @@
 % Please edit documentation in R/xp_op_either.r
 \name{xp_op_either}
 \alias{xp_op_either}
-\title{Match one of two patterns}
+\title{Add an alternative pattern (OR)}
 \usage{
-xp_op_either(pattern_a, pattern_b)
+xp_op_either(pattern, alternative)
 }
 \arguments{
-\item{pattern_a}{The first pattern.}
+\item{pattern}{A \code{regexpert} object or character string from the pipe.}
 
-\item{pattern_b}{The second pattern.}
+\item{alternative}{The alternative pattern or string to match.}
 }
 \value{
-A character string.
+A \code{regexpert} object.
 }
 \description{
-Provides an 'OR' logic between two different patterns.
+Adds an "either/or" condition to the pattern. This is equivalent to the
+regex pipe \code{|} operator.
 }
 \examples{
-xp_op_either(xp_build_digits(3), xp_build_letters(2))
+# Match "cat" or "dog"
+xp_build_literal("cat") \%>\% xp_op_either("dog")
+
+# Match a digit or a letter
+xp_build_digits() \%>\% xp_op_either(xp_build_letters())
 }
