@@ -1,8 +1,8 @@
-# regexpert <img src="man/figures/logo.svg" align="right" height="139" />
+# regexpert <img src="man/figures/logo.svg" align="right" height="139" alt="regexpert logo"/>
 
-<!-- [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
-[![R-CMD-check](https://github.com/Jonnboi13/regexpert/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Jonnboi13/regexpert/actions)
-[![Documentation](https://img.shields.io/badge/docs-pkgdown-blue.svg)](https://Jonnboi13.github.io/regexpert/) -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
+[![R-CMD-check](https://github.com/jonnboi13/regexpert/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jonnboi13/regexpert/actions)
+[![Documentation](https://img.shields.io/badge/docs-pkgdown-blue.svg)](https://jonnboi13.github.io/regexpert/)
 
 The goal of **regexpert** is to make regular expressions in R less of a headache. It provides a pipe-friendly, human-readable DSL for building and executing regex patterns — no symbol memorization required.
 
@@ -11,15 +11,16 @@ The goal of **regexpert** is to make regular expressions in R less of a headache
 You can install the development version of regexpert from [GitHub](https://github.com/) with:
 ```r
 # install.packages("devtools")
-devtools::install_github("Jonnboi13/regexpert")
+devtools::install_github("jonnboi13/regexpert")
 ```
 
 ## Why regexpert?
 
-Standard regular expressions are powerful but often unreadable. `regexpert` breaks the process into two logical steps:
+Standard regular expressions are powerful but often unreadable. `regexpert` breaks the process into three logical steps:
 
 1. **Build:** Describe what you're looking for using plain-English functions like `xp_build_digits()`.
-2. **Act:** Use `xp_find()` to return matches, or `xp_view()` to inspect the raw regex being generated.
+2. **Operate:** Refine your pattern with `xp_op_repeat()`, `xp_op_optional()`, and more.
+3. **Act:** Use `xp_action_find()` to return matches, or `xp_action_view()` to inspect the raw regex being generated.
 
 ## Example
 
@@ -29,29 +30,32 @@ library(regexpert)
 library(magrittr)
 
 # Find digits in a string
-"Order #88412 placed" %>%
-  xp_build_digits() %>%
-  xp_find()
+xp_build_digits() %>%
+  xp_op_repeat(1, Inf) %>%
+  xp_action_find("Order #88412 placed")
 #> [1] "88412"
 
 # Find only the letters
-"Order #88412 placed" %>%
-  xp_build_letters() %>%
-  xp_find()
+xp_build_letters(case = "both") %>%
+  xp_op_repeat(1, Inf) %>%
+  xp_action_find("Order #88412 placed")
 #> [1] "Order" "placed"
 
-# Negate a pattern — find everything that isn't whitespace
-"hello world" %>%
-  xp_build_whitespace(negate = TRUE) %>%
-  xp_find()
-#> [1] "hello" "world"
+# Use a standard pattern for common data types
+xp_build_standard("email") %>%
+  xp_action_find("Contact us at support@regexpert.com")
+#> [1] "support@regexpert.com"
 
-# Use xp_view() to inspect the regex your builder creates
+# Inspect the regex being built under the hood
 xp_build_digits() %>%
-  xp_view()
-#> [1] "[\\d]"
+  xp_op_repeat(3) %>%
+  xp_action_view()
+#> Current Regex Pattern:
+#> (?:\d){3}
 ```
 
 ## Documentation
 
-Full documentation, including function references and vignettes, is available at <https://Jonnboi13.github.io/regexpert/>.
+Full documentation, including function references and vignettes, is available at <https://jonnboi13.github.io/regexpert/>.
+
+📖 **Get started:** [Getting Started with regexpert](https://jonnboi13.github.io/regexpert/articles/getting-started.html)

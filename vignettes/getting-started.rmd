@@ -78,7 +78,7 @@ xp_build_whitespace() %>%
 
 ### `xp_build_literal()`
 
-Sometimes you need to match specific symbols like `$` or `.`. Usually, these are "dangerous" in regex, but `xp_build_literal()` automatically escapes them for you.
+Sometimes you need to match specific symbols like `$` or `.`. These are "dangerous" in regex, but `xp_build_literal()` automatically escapes them for you.
 ```{r eval = FALSE}
 xp_build_literal("$") %>%
   xp_build_digits() %>%
@@ -86,6 +86,35 @@ xp_build_literal("$") %>%
   xp_action_find("The price is $100")
 #> [1] "$100"
 ```
+
+## Standard Patterns
+
+For common real-world data types, `regexpert` includes a library of pre-built patterns via `xp_build_standard()`. No need to remember complex regex — just name what you want.
+```{r eval = FALSE}
+# Extract email addresses
+xp_build_standard("email") %>%
+  xp_action_find("Contact us at support@regexpert.com or sales@example.org")
+#> [1] "support@regexpert.com" "sales@example.org"
+
+# Extract phone numbers
+xp_build_standard("phone") %>%
+  xp_action_find("Call us at (208) 555-1234 or 208.555.5678")
+#> [1] "(208) 555-1234" "208.555.5678"
+
+# Extract ZIP codes
+xp_build_standard("zip") %>%
+  xp_action_find("My zip code is 83440")
+#> [1] "83440"
+
+# Extract ISO dates
+xp_build_standard("date_iso") %>%
+  xp_action_find("The event is on 2026-03-17")
+#> [1] "2026-03-17"
+```
+
+The full list of available types includes: `email`, `phone`, `zip`, `date_iso`, `date_us`, `credit_card`, `ipv4`, `hex_color`, `time_24`, `ssn`, and `mac_address`.
+
+Need a pattern that isn't in the library? Use `xp_register()` to add your own custom patterns to the session library and access them the same way via `xp_build_standard()`.
 
 ## Inspecting Your Work
 

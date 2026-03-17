@@ -8,8 +8,8 @@
 #' @export
 #' @examples
 #' my_text <- "The year is 2026."
-#' xp_build_digits() %>% xp_op_repeat(4) %>% xp_find(my_text)
-xp_find <- function(pattern, string) {
+#' xp_build_digits() %>% xp_op_repeat(4) %>% xp_action_find(my_text)
+xp_action_find <- function(pattern, string) {
   # Extract the raw string from the xp object
   regex_string <- as.character(pattern)
   

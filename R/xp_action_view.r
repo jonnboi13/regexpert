@@ -5,8 +5,8 @@
 #' @param pattern A \code{regexpert} object.
 #' @export
 #' @examples
-#' xp_build_digits() %>% xp_op_repeat(3) %>% xp_view()
-xp_view <- function(pattern) {
+#' xp_build_digits() %>% xp_op_repeat(3) %>% xp_action_view()
+xp_action_view <- function(pattern) {
   # We use cat() because it renders the backslashes correctly for human reading
   cat("Current Regex Pattern:\n")
   cat(as.character(pattern), "\n")
