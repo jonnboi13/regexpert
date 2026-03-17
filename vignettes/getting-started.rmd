@@ -87,6 +87,45 @@ xp_build_literal("$") %>%
 #> [1] "$100"
 ```
 
+## Chaining Builders Together
+
+The real power of `regexpert` comes from chaining multiple builders into a single pipeline. Each builder adds to the pattern left to right, letting you describe complex matches in plain English steps.
+
+For example, say you want to extract prices from a messy string — a `$` sign followed by one or more digits, a dot, then exactly two decimal digits:
+```{r eval = FALSE}
+xp_build_literal("$") %>%
+  xp_build_digits() %>%
+  xp_op_repeat(1, Inf) %>%
+  xp_build_literal(".") %>%
+  xp_build_digits() %>%
+  xp_op_repeat(2, 2) %>%
+  xp_action_find("Items: $4.99, $12.50, and $120.00")
+#> [1] "$4.99"   "$12.50"  "$120.00"
+```
+
+Or say you want to pull out hyphenated product codes — three letters, a dash, then four digits:
+```{r eval = FALSE}
+xp_build_letters(case = "upper") %>%
+  xp_op_repeat(3, 3) %>%
+  xp_build_literal("-") %>%
+  xp_build_digits() %>%
+  xp_op_repeat(4, 4) %>%
+  xp_action_find("Products: ABC-1234, XYZ-5678, and DEF-9999")
+#> [1] "ABC-1234" "XYZ-5678" "DEF-9999"
+```
+
+You can always use `xp_action_view()` to peek at the regex being built at any point in the pipeline — useful for debugging or learning:
+```{r eval = FALSE}
+xp_build_letters(case = "upper") %>%
+  xp_op_repeat(3, 3) %>%
+  xp_build_literal("-") %>%
+  xp_build_digits() %>%
+  xp_op_repeat(4, 4) %>%
+  xp_action_view()
+#> Current Regex Pattern:
+#> [A-Z]{3}\-\d{4}
+```
+
 ## Standard Patterns
 
 For common real-world data types, `regexpert` includes a library of pre-built patterns via `xp_build_standard()`. No need to remember complex regex — just name what you want.
@@ -127,3 +166,29 @@ xp_build_digits() %>%
 #> Current Regex Pattern:
 #> (?:\d){3}\-
 ```
+
+## Try It Yourself
+
+Now that you've seen how `regexpert` works, here are a few challenges to test your understanding. Each one can be solved by chaining builders and operators together.
+
+**Challenge 1 — Extract the time**
+
+Given the string `"Meeting at 09:30 and follow-up at 14:45"`, write a pipeline that extracts both times in `HH:MM` format.
+
+*Hint: a time is two digits, a literal colon, then two more digits.*
+
+**Challenge 2 — Pull out the serial numbers**
+
+Given `"Units: SN-00123, SN-00456, SN-00789"`, write a pipeline that extracts each serial number in `SN-XXXXX` format.
+
+*Hint: think about what `xp_build_literal()` and `xp_op_repeat()` can do together.*
+
+**Challenge 3 — Find the hex color codes**
+
+Given `"Theme colors: #ff5733, #c70039, and #900c3f"`, try extracting the hex codes using `xp_build_standard()` first, then try building the same pattern manually from scratch using `xp_build_literal()` and `xp_build_alnum()`.
+
+*Hint: a hex color is a `#` followed by exactly 6 alphanumeric characters.*
+
+---
+
+Once you're comfortable with the basics, explore the full function reference at `?xp_build_standard` and `?xp_op_repeat` to see everything `regexpert` can do.
