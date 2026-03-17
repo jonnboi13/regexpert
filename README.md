@@ -1,8 +1,9 @@
-# regexpert <img src="man/figures/logo.svg" align="right" height="139" alt="regexpert logo"/>
+# regexpert <img src="man/figures/logo.svg" align="right" height="139" alt="Regexpert Logo"/>
 
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
-[![R-CMD-check](https://github.com/jonnboi13/regexpert/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jonnboi13/regexpert/actions)
-[![Documentation](https://img.shields.io/badge/docs-pkgdown-blue.svg)](https://jonnboi13.github.io/regexpert/)
+<!-- [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html)
+[![R-CMD-check](https://github.com/Jonnboi13/regexpert/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Jonnboi13/regexpert/actions)
+[![Documentation](https://img.shields.io/badge/docs-pkgdown-blue.svg)](https://Jonnboi13.github.io/regexpert/) -->
+
 
 The goal of **regexpert** is to make regular expressions in R less of a headache. It provides a pipe-friendly, human-readable DSL for building and executing regex patterns — no symbol memorization required.
 
@@ -26,8 +27,6 @@ Standard regular expressions are powerful but often unreadable. `regexpert` brea
 
 The `regexpert` workflow is designed to be used with the pipe (`%>%` or `|>`):
 ```r
-library(regexpert)
-library(magrittr)
 
 # Find digits in a string
 xp_build_digits() %>%
